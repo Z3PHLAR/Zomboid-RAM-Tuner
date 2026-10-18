@@ -6,7 +6,7 @@ rem Find the real Windows Desktop, including OneDrive redirection.
 set "PZ_DESKTOP="
 for /f "usebackq delims=" %%D in (`powershell -NoProfile -Command "[Environment]::GetFolderPath('Desktop')"`) do set "PZ_DESKTOP=%%D"
 if not defined PZ_DESKTOP set "PZ_DESKTOP=%USERPROFILE%\Desktop"
-set "PZ_SOURCE=%PZ_DESKTOP%\ZOMBOID_RAM_PICKER.py"
+set "PZ_SOURCE=%PZ_DESKTOP%\ZOMBOID_RAM_TUNER_CODE.py"
 set "PZ_VIDEO=%PZ_DESKTOP%\slow.mp4"
 set "PZ_BUILD=%PZ_DESKTOP%\ZOMBOID_RAM_BUILD"
 
@@ -48,16 +48,16 @@ if errorlevel 1 goto :build_failed
 
 echo.
 echo Building EXE with embedded video. This can take several minutes...
-%PZ_PY% -m PyInstaller --noconfirm --clean --onefile --windowed --name "ZOMBOID_RAM_PICKER" --icon "pz_ram.ico" --add-data "%PZ_VIDEO%;." --collect-all PySide6.QtMultimedia --collect-all PySide6.QtMultimediaWidgets --distpath "%PZ_BUILD%\dist" --workpath "%PZ_BUILD%\work" --specpath "%PZ_BUILD%" "%PZ_SOURCE%"
+%PZ_PY% -m PyInstaller --noconfirm --clean --onefile --windowed --name "ZOMBOID_RAM_TUNER" --icon "pz_ram.ico" --add-data "%PZ_VIDEO%;." --collect-all PySide6.QtMultimedia --collect-all PySide6.QtMultimediaWidgets --distpath "%PZ_BUILD%\dist" --workpath "%PZ_BUILD%\work" --specpath "%PZ_BUILD%" "%PZ_SOURCE%"
 if errorlevel 1 goto :build_failed
-if not exist "%PZ_BUILD%\dist\ZOMBOID_RAM_PICKER.exe" goto :build_failed
-copy /y "%PZ_BUILD%\dist\ZOMBOID_RAM_PICKER.exe" "%PZ_DESKTOP%\ZOMBOID_RAM_PICKER.exe" >nul
+if not exist "%PZ_BUILD%\dist\ZOMBOID_RAM_TUNER.exe" goto :build_failed
+copy /y "%PZ_BUILD%\dist\ZOMBOID_RAM_TUNER.exe" "%PZ_DESKTOP%\ZOMBOID_RAM_TUNER.exe" >nul
 if errorlevel 1 goto :build_failed
 popd
 
 echo.
 echo SUCCESS! Standalone program created:
-echo "%PZ_DESKTOP%\ZOMBOID_RAM_PICKER.exe"
+echo "%PZ_DESKTOP%\ZOMBOID_RAM_TUNER.exe"
 echo.
 echo Video is included. Other users do not need Python installed.
 echo The embedded video extracts at startup, so the first launch may take a moment.
